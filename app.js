@@ -38,6 +38,7 @@ message: 'What is your office phone number?',
 when: (answers) => answers.role === "Manager",
 },
 
+//when is used to filter out questions according to the role. 
 {
 type: 'input',
 name: 'github',
@@ -51,8 +52,6 @@ name: 'school',
 message: 'What is your school/college name?',
 when: (answers) => answers.role === "Intern",
 },
-
-
 
 ]);
 
