@@ -19,9 +19,10 @@ message: 'What is your name? '
 },
 
 {
-type: 'input',
+type: 'list',
 name: 'role',
 message: 'What is your role?',
+choices: ["Engineer", "Intern", "Manager"],
 },
 
 {
@@ -33,20 +34,25 @@ message: 'What is your employee ID?',
 {
 type: 'input',
 name: 'phone',
-message: 'What is your office phone number?'
+message: 'What is your office phone number?',
+when: (answers) => answers.role === "Manager",
 },
 
 {
 type: 'input',
 name: 'github',
-message: 'What is your github username?'
+message: 'What is your github username?',
+when: (answers) => answers.role === "Engineer",
 },
 
 {
 type: 'input',
 name: 'school',
-message: 'What is your school/college name?'
+message: 'What is your school/college name?',
+when: (answers) => answers.role === "Intern",
 },
+
+
 
 ]);
 
@@ -57,7 +63,10 @@ questions()
 
     const { name, role, id, phone, github, school } = userResponse;
 
+
 });
+
+
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
