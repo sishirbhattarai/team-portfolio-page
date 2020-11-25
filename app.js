@@ -10,6 +10,8 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+const employees = []
+
 const questions = () => 
 inquirer.prompt([
 {
@@ -33,12 +35,18 @@ message: 'What is your employee ID?',
 
 {
 type: 'input',
+name: 'email',
+message: 'What is your emmail?',
+},
+
+{
+type: 'input',
 name: 'phone',
 message: 'What is your office phone number?',
 when: (answers) => answers.role === "Manager",
 },
 
-//when is used to filter out questions according to the role. 
+//'when' is used to filter out questions according to the role. 
 {
 type: 'input',
 name: 'github',
@@ -60,8 +68,36 @@ questions()
 .then(function(userResponse) {
     console.log(userResponse)
 
-    const { name, role, id, phone, github, school } = userResponse;
+    const { name, role, email, id, phone, github, school } = userResponse;
 
+let employee;
+    ​    switch(role) {
+            case 'Engineer':
+            employee = new Engineer(name, id, email, github);
+            break;
+        }
+
+        switch(role) {
+            case 'Manager':
+            employee = new Manager(name, id, email, phone );
+            break;
+        }
+        switch(role){
+            case 'Intern':
+            employee = new Intern(name, id, email, school);
+            break;
+        }    ​
+        employees.push(employee)
+    ​
+        const html = render(employees)
+
+fs.writeFile(outputPath, html, function(error) {
+    if (error) {
+        return console.log(error);
+      }
+      else {
+       console.log("The README is now generated Successfully")
+  }});
 
 });
 
