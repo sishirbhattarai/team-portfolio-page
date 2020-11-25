@@ -68,24 +68,24 @@ questions()
 
     const { name, role, email, id, phone, github, school } = userResponse;
 
-let employee;
-    ​    switch(role) {
+       let employee;
+switch(role) {
+
+    case 'Engineer':
+    employee = new Engineer(name, id, email, github);
+    break;
+    
+    case 'Manager':
+    employee = new Manager(name, id, email, phone );
+    break;
         
-            case 'Engineer':
-            employee = new Engineer(name, id, email, github);
-            break;
-            
-            case 'Manager':
-            employee = new Manager(name, id, email, phone );
-            break;
-                
-            case 'Intern':
-            employee = new Intern(name, id, email, school);
-            break;
-        }    ​
-        employees.push(employee)
-    ​
-        const html = render(employees)
+    case 'Intern':
+    employee = new Intern(name, id, email, school);
+    break;
+                }                ​
+employees.push(employee)
+
+const html = render(employees)
 
 fs.writeFile(outputPath, html, function(error) {
     if (error) {
