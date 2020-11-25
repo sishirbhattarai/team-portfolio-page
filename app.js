@@ -62,9 +62,7 @@ when: (answers) => answers.role === "Intern",
 },
 
 ]);
-
 questions()
-
 .then(function(userResponse) {
     console.log(userResponse)
 
@@ -72,17 +70,15 @@ questions()
 
 let employee;
     ​    switch(role) {
+        
             case 'Engineer':
             employee = new Engineer(name, id, email, github);
             break;
-        }
-
-        switch(role) {
+            
             case 'Manager':
             employee = new Manager(name, id, email, phone );
             break;
-        }
-        switch(role){
+                
             case 'Intern':
             employee = new Intern(name, id, email, school);
             break;
@@ -96,7 +92,7 @@ fs.writeFile(outputPath, html, function(error) {
         return console.log(error);
       }
       else {
-       console.log("The README is now generated Successfully")
+       console.log("The html is now generated Successfully")
   }});
 
 });
