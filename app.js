@@ -9,94 +9,91 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
+const { constants } = require("crypto");
 
-const employees = []
+const employees = [];
 
-const questions = () => 
-inquirer.prompt([
-{
-type: 'input',
-name: 'name',
-message: 'What is your name? '
-},
+const questions = () =>
+  inquirer.prompt([
+    {
+      type: "input",
+      name: "name",
+      message: "What is your name? ",
+    },
 
-{
-type: 'list',
-name: 'role',
-message: 'What is your role?',
-choices: ["Engineer", "Intern", "Manager"],
-},
+    {
+      type: "list",
+      name: "role",
+      message: "What is your role?",
+      choices: ["Engineer", "Intern", "Manager"],
+    },
 
-{
-type: 'input',
-name: 'id',
-message: 'What is your employee ID?',
-},
+    {
+      type: "input",
+      name: "id",
+      message: "What is your employee ID?",
+    },
 
-{
-type: 'input',
-name: 'email',
-message: 'What is your emmail?',
-},
+    {
+      type: "input",
+      name: "email",
+      message: "What is your emmail?",
+    },
 
-{
-type: 'input',
-name: 'phone',
-message: 'What is your office phone number?',
-when: (answers) => answers.role === "Manager",
-},
+    {
+      type: "input",
+      name: "phone",
+      message: "What is your office phone number?",
+      when: (answers) => answers.role === "Manager",
+    },
 
-//'when' is used to filter out questions according to the role. 
-{
-type: 'input',
-name: 'github',
-message: 'What is your github username?',
-when: (answers) => answers.role === "Engineer",
-},
+    //'when' is used to filter out questions according to the role.
+    {
+      type: "input",
+      name: "github",
+      message: "What is your github username?",
+      when: (answers) => answers.role === "Engineer",
+    },
 
-{
-type: 'input',
-name: 'school',
-message: 'What is your school/college name?',
-when: (answers) => answers.role === "Intern",
-},
+    {
+      type: "input",
+      name: "school",
+      message: "What is your school/college name?",
+      when: (answers) => answers.role === "Intern",
+    },
+  ]);
 
-]);
-questions()
-.then(function(userResponse) {
-    console.log(userResponse)
+questions().then(function (userResponse) {
+  console.log(userResponse);
 
-    const { name, role, email, id, phone, github, school } = userResponse;
+  const { name, role, email, id, phone, github, school } = userResponse;
 
-       let employee;
-switch(role) {
+  let employee;
+  switch (role) {
+    case "Engineer":
+      employee = new Engineer(name, id, email, github);
+      break;
 
-    case 'Engineer':
-    employee = new Engineer(name, id, email, github);
-    break;
-    
-    case 'Manager':
-    employee = new Manager(name, id, email, phone );
-    break;
-        
-    case 'Intern':
-    employee = new Intern(name, id, email, school);
-    break;
-                }                ​
-employees.push(employee)
+    case "Manager":
+      employee = new Manager(name, id, email, phone);
+      break;
 
-const html = render(employees)
+    case "Intern":
+      employee = new Intern(name, id, email, school);
+  }
 
-fs.writeFile(outputPath, html, function(error) {
+  employees.push(employee);
+
+  const html = render(employees);
+
+  fs.writeFile(outputPath, html, function (error) {
     if (error) {
-        return console.log(error);
-      }
-      else {
-       console.log("The html is now generated Successfully")
-  }});
-
+      return console.log(error);
+    } else {
+      console.log("The html is now generated Successfully");
+    }
+  });
 });
-
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
