@@ -28,7 +28,7 @@ HTML, CSS, JS, npm, node
 
 * Ran the test and it passed all tests. 
 
-![team html page](./Assets/image2.PNGG)
+![team html page](./Assets/image2.PNG)
 
 ## Video Link:
 https://drive.google.com/file/d/1Ax03bZBpFK7RWJTXnL6IHaRpD5iJq5LE/view
