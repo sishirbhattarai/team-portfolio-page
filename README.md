@@ -15,7 +15,7 @@ team consists of a manager, and any number of engineers and interns.
   * ID
 
   * Role-specific property (School, link to GitHub profile, or office number)
-  
+
 ## Github link:
 
 https://github.com/sishirbhattarai/team-portfolio-page
@@ -28,8 +28,10 @@ HTML, CSS, JS, npm, node
 
 * Ran the test and it passed all tests. 
 
+![team html page](./Assets/image2.PNGG)
+
 ## Video Link:
-https://drive.google.com/file/d/1snYu41D2fdLZnOeBDIjVwgPfqjPjOInF/view
+https://drive.google.com/file/d/1Ax03bZBpFK7RWJTXnL6IHaRpD5iJq5LE/view
 
 
 ## Submission on BCS
