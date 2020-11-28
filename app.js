@@ -66,33 +66,34 @@ const questions = () =>
   
     }
   ])
-
-
-questions().then(function (userResponse) {
-  console.log(userResponse);
+  .then(function (userResponse) {
+    console.log(userResponse);
+    
   
+    const { name, role, email, id, phone, github, school } = userResponse;
+  
+    let employee;
+    switch (role) {
+      case "Engineer":
+        employee = new Engineer(name, id, email, github);
+        addMoreMember()
+        break;
+  
+      case "Manager":
+        employee = new Manager(name, id, email, phone);
+        addMoreMember()
+        break;
+  
+      case "Intern":
+        employee = new Intern(name, id, email, school);
+        addMoreMember()
+    }
+  
+    employees.push(employee);
+});
+questions()
 
-  const { name, role, email, id, phone, github, school } = userResponse;
-
-  let employee;
-  switch (role) {
-    case "Engineer":
-      employee = new Engineer(name, id, email, github);
-      addMoreMember()
-      break;
-
-    case "Manager":
-      employee = new Manager(name, id, email, phone);
-      addMoreMember()
-      break;
-
-    case "Intern":
-      employee = new Intern(name, id, email, school);
-      addMoreMember()
-  }
-
-  employees.push(employee);
-
+function generateFile() {
   const html = render(employees);
 
   fs.writeFile(outputPath, html, function (error) {
@@ -101,11 +102,10 @@ questions().then(function (userResponse) {
     } else {
       console.log("The html is now generated Successfully");
     }
-  });
+  })
+};
 
- });
-
-function addMoreMember() {
+ function addMoreMember() {
   inquirer.prompt(
     {
       type: "confirm",
@@ -115,12 +115,12 @@ function addMoreMember() {
       function ({ addMore }) {
       console.log("add More members", addMore)
       if (addMore) {
-         questions()
+         questions();
       } else {
-          render()
+          generateFile()
       }
-  }
- )
+    }
+   )
 }
 
  
