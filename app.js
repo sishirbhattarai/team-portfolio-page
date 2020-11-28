@@ -13,6 +13,7 @@ const { constants } = require("crypto");
 
 const employees = [];
 
+
 const questions = () =>
   inquirer.prompt([
     {
@@ -45,6 +46,7 @@ const questions = () =>
       name: "phone",
       message: "What is your office phone number?",
       when: (answers) => answers.role === "Manager",
+ 
     },
 
     //'when' is used to filter out questions according to the role.
@@ -53,6 +55,7 @@ const questions = () =>
       name: "github",
       message: "What is your github username?",
       when: (answers) => answers.role === "Engineer",
+  
     },
 
     {
@@ -60,11 +63,14 @@ const questions = () =>
       name: "school",
       message: "What is your school/college name?",
       when: (answers) => answers.role === "Intern",
-    },
-  ]);
+  
+    }
+  ])
+
 
 questions().then(function (userResponse) {
   console.log(userResponse);
+  
 
   const { name, role, email, id, phone, github, school } = userResponse;
 
@@ -72,14 +78,17 @@ questions().then(function (userResponse) {
   switch (role) {
     case "Engineer":
       employee = new Engineer(name, id, email, github);
+      addMoreMember()
       break;
 
     case "Manager":
       employee = new Manager(name, id, email, phone);
+      addMoreMember()
       break;
 
     case "Intern":
       employee = new Intern(name, id, email, school);
+      addMoreMember()
   }
 
   employees.push(employee);
@@ -93,27 +102,25 @@ questions().then(function (userResponse) {
       console.log("The html is now generated Successfully");
     }
   });
-});
 
-// Write code to use inquirer to gather information about the development team members,
-// and to create objects for each team member (using the correct classes as blueprints!)
+ });
 
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
+function addMoreMember() {
+  inquirer.prompt(
+    {
+      type: "confirm",
+      name: "addMore",
+      message: "Do you want to add more members?",
+    }).then(
+      function ({ addMore }) {
+      console.log("add More members", addMore)
+      if (addMore) {
+         questions()
+      } else {
+          render()
+      }
+  }
+ )
+}
 
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
-
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
-
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
+ 
